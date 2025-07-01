@@ -126,7 +126,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             Direct3D::EndDraw();
         }
     }
-    q->Release();
     Direct3D::Release();
 
     return (int) msg.wParam;
