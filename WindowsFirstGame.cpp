@@ -96,15 +96,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-
-    Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
+    HRESULT hr;
+    hr = Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
+    if (FAILED(hr))
+    {
+        PostQuitMessage(0);
+    }
 
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSFIRSTGAME));
 
     MSG msg = {};
     Quad* q = new Quad();
-    q->Initialize();
+    hr = q->Initialize();
+    if (FAILED(hr))
+    {
+        PostQuitMessage(0);
+    }
 
     // メイン メッセージ ループ:
     while (msg.message != WM_QUIT)
@@ -126,6 +134,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             Direct3D::EndDraw();
         }
     }
+    q->Release();//一応
+    SAFE_DELETE(q);
     Direct3D::Release();
 
     return (int) msg.wParam;
