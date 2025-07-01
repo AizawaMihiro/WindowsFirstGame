@@ -31,6 +31,7 @@
 #include "framework.h"
 #include "WindowsFirstGame.h"
 #include "Direct3D.h"
+#include "Quad.h"
 
 
 HWND hWnd = nullptr;
@@ -102,6 +103,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSFIRSTGAME));
 
     MSG msg = {};
+    Quad* q = new Quad();
+    q->Initialize();
 
     // メイン メッセージ ループ:
     while (msg.message != WM_QUIT)
@@ -116,14 +119,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         //メッセージなし
         {
             //ゲームの処理
-
             Direct3D::BeginDraw();
 
             //描画処理
-
+            q->Draw();
             Direct3D::EndDraw();
         }
     }
+    q->Release();
     Direct3D::Release();
 
     return (int) msg.wParam;
