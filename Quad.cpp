@@ -34,6 +34,7 @@ HRESULT Quad::Initialize()
 	hr = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hr))
 	{
+		MessageBox(nullptr, L"頂点バッファの作成に失敗しました", L"エラー", MB_OK);
 		return hr;
 	}
 
@@ -55,6 +56,7 @@ HRESULT Quad::Initialize()
 	hr = Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 	if (FAILED(hr))
 	{
+		MessageBox(nullptr, L"インデックスバッファの作成に失敗しました", L"エラー", MB_OK);
 		return hr;
 	}
 
@@ -71,6 +73,7 @@ HRESULT Quad::Initialize()
 	hr = Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 	if (FAILED(hr))
 	{
+		MessageBox(nullptr, L"コンスタントバッファの作成に失敗しました", L"エラー", MB_OK);
 		return hr;
 	}
 	return S_OK;

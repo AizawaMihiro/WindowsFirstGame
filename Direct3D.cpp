@@ -106,6 +106,7 @@ HRESULT Direct3D::InitShader()
     hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
     if (FAILED(hr))
     {
+        MessageBox(nullptr, L"頂点シェーダーの作成に失敗しました", L"エラー", MB_OK);
         return hr;
     }
 
@@ -116,6 +117,7 @@ HRESULT Direct3D::InitShader()
     hr = pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
     if (FAILED(hr))
     {
+		MessageBox(nullptr, L"頂点インプットレイアウトの作成に失敗しました", L"エラー", MB_OK);
         return hr;
     }
 
@@ -128,6 +130,7 @@ HRESULT Direct3D::InitShader()
     hr = pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
     if (FAILED(hr))
     {
+		MessageBox(nullptr, L"ピクセルシェーダーの作成に失敗しました", L"エラー", MB_OK);
         return hr;
     }
 

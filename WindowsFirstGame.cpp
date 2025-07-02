@@ -100,7 +100,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     hr = Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
     if (FAILED(hr))
     {
-        PostQuitMessage(0);
+        return 0;
     }
 
 
@@ -111,7 +111,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     hr = q->Initialize();
     if (FAILED(hr))
     {
-        PostQuitMessage(0);
+		return 0;
     }
 
     // メイン メッセージ ループ:
