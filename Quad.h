@@ -1,6 +1,7 @@
 #pragma once
 #include "Direct3D.h"
 #include <DirectXMath.h>
+#include "Camera.h"
 
 using namespace DirectX;
 
@@ -19,6 +20,6 @@ public:
 	Quad();
 	~Quad();
 	HRESULT Initialize();
-	void Draw();
+	void Draw(XMMATRIX& worldMatrix);
 	void Release();
 };

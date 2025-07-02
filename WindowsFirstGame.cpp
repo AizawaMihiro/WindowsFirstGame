@@ -32,6 +32,7 @@
 #include "WindowsFirstGame.h"
 #include "Direct3D.h"
 #include "Quad.h"
+#include "Camera.h"
 
 
 HWND hWnd = nullptr;
@@ -107,6 +108,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSFIRSTGAME));
 
     MSG msg = {};
+    Camera::Initialize();
     Quad* q = new Quad();
     hr = q->Initialize();
     if (FAILED(hr))
@@ -127,10 +129,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         //メッセージなし
         {
             //ゲームの処理
+            Camera::Update();
             Direct3D::BeginDraw();
 
             //描画処理
-            q->Draw();
+
+            XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(45));
+            q->Draw(mat);
             Direct3D::EndDraw();
         }
     }
