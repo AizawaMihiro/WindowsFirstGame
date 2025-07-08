@@ -54,4 +54,6 @@ HRESULT Texture::Load(std::string fileName)
 
 void Texture::Release()
 {
+	SAFE_RELEASE(pSampler_);
+	SAFE_RELEASE(pSRV_);
 }
