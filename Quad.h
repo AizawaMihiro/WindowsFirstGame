@@ -29,6 +29,7 @@ public:
 	Quad();
 	~Quad();
 	HRESULT Initialize();
+	HRESULT Initialize(VERTEX vertex[4], std::string filename);
 	void Draw(XMMATRIX& worldMatrix);
 	void Release();
 };

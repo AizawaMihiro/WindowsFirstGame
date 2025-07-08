@@ -104,6 +104,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 0;
     }
 
+    float angle = 0.0f;
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSFIRSTGAME));
 
@@ -133,10 +134,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             Direct3D::BeginDraw();
 
             //描画処理
-
-            XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(45));
+            XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
             q->Draw(mat);
             Direct3D::EndDraw();
+            angle += 0.1f;
         }
     }
     q->Release();//一応
