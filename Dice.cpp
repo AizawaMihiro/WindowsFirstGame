@@ -4,7 +4,7 @@ Dice::Dice()
 {
 	for (int i = 0; i < 6; i++)
 	{
-		quad[i] = nullptr;
+		quad[i] = new Quad;
 	}
 }
 
@@ -28,63 +28,50 @@ HRESULT Dice::Initialize()
 		switch (i)
 		{
 		case 0:
-			vertices[] =
-			{
-				{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-				{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-				{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-				{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-			};
+			vertices[0] = { XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[1] = { XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[2] = { XMVectorSet(1.0f,  -1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) };
+			vertices[3] = { XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) };
+			filename = "Dice_1";
 			break;
 		case 1:
-			vertices[] =
-			{
-				{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-				{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-				{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-				{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-			};
+			vertices[0] = { XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[1] = { XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[2] = { XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) };
+			vertices[3] = { XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) };
+			filename = "Dice_2";
 			break;
 		case 2:
-			vertices[] =
-			{
-				{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-				{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-				{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-				{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-			};
+			vertices[0] = { XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[1] = { XMVectorSet(-1.0f, 1.0f, 2.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[2] = { XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) };
+			vertices[3] = { XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) };
+			filename = "Dice_3";
 			break;
 		case 3:
-			vertices[] =
-			{
-				{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-				{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-				{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-				{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-			};
+			vertices[0] = { XMVectorSet(1.0f,  -1.0f, 2.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[1] = { XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[2] = { XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) };
+			vertices[3] = { XMVectorSet(1.0f,  -1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) };
+			filename = "Dice_4";
 			break;
 		case 4:
-			vertices[] =
-			{
-				{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-				{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-				{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-				{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-			};
+			vertices[0] = { XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[1] = { XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[2] = { XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) };
+			vertices[3] = { XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) };
+			filename = "Dice_5";
 			break;
 		case 5:
-			vertices[] =
-			{
-				{ XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-				{ XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-				{ XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-				{ XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-			};
+			vertices[0] = { XMVectorSet(1.0f,   1.0f, 2.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[1] = { XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) };
+			vertices[2] = { XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) };
+			vertices[3] = { XMVectorSet(1.0f,  -1.0f, 2.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) };
+			filename = "Dice_6";
 			break;
 		default:
 			break;
 		}
-		filename = "Dice_" + (i + 1);
 		hr = quad[i]->Initialize(vertices,filename);
 		if (hr!=S_OK)
 		{

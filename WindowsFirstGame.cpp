@@ -33,6 +33,7 @@
 #include "Direct3D.h"
 #include "Quad.h"
 #include "Camera.h"
+#include "Dice.h"
 
 
 HWND hWnd = nullptr;
@@ -110,8 +111,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg = {};
     Camera::Initialize();
-    Quad* q = new Quad();
-    hr = q->Initialize();
+    //Quad* d = new Quad();
+    Dice* d = new Dice();
+    hr = d->Initialize();
     if (FAILED(hr))
     {
 		return 0;
@@ -135,13 +137,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
             //描画処理
             XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
-            q->Draw(mat);
+            d->Draw(mat);
             Direct3D::EndDraw();
             angle += 0.1f;
         }
     }
-    q->Release();//一応
-    SAFE_DELETE(q);
+    d->Release();//一応
+    SAFE_DELETE(d);
     Direct3D::Release();
 
     return (int) msg.wParam;
