@@ -3,7 +3,7 @@
 
 Dice::Dice()
 	:Quad()
-{
+{	
 }
 
 Dice::~Dice()
@@ -16,40 +16,40 @@ HRESULT Dice::Initialize()
 	VERTEX vertices[] =
 	{
 		//1
-		{ XMVectorSet(-1.0f, 1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },
+		{ XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,   1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f, 1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f,-1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, -1.0f, 0.0f)},
 
 		//6
-		{ XMVectorSet(1.0f,   1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },
+		{ XMVectorSet(1.0f,   1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f, 1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f,-1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f,-1.0f, 1.0f, 0.0f)},
 
 		//2
-		{ XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },
+		{ XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  1.0f,  1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f,  1.0f, 0.0f)},
+		{ XMVectorSet(1.0f, -1.0f,  1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, -1.0f,  1.0f, 0.0f)},
+		{ XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f)},
 
 		//5
-		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },
+		{ XMVectorSet(-1.0f,  1.0f,  1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f,  1.0f,  1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f,  1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, -1.0f,  1.0f, 0.0f)},
 
 		//3
-		{ XMVectorSet(-1.0f, 1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },
+		{ XMVectorSet(-1.0f, 1.0f,-1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f,-1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  1.0f,-1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f,-1.0f, 0.0f)},
 
 		//4
-		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },
-		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },
+		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(-1.0f, -1.0f,-1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(1.0f,  -1.0f,-1.0f, 0.0f)},
 
 	};
 	int index[] = {
