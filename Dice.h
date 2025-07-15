@@ -6,9 +6,9 @@ class Dice :
     Quad* quad[6];
 public:
     Dice();
-    ~Dice();
-    HRESULT Initialize();
-    void Draw(XMMATRIX& worldMatrix);
+    ~Dice() override;
+    HRESULT Initialize() override;
+    void Draw(XMMATRIX& worldMatrix) override;
     void Release();
 };
 

@@ -139,7 +139,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
             d->Draw(mat);
             Direct3D::EndDraw();
-            angle += 0.1f;
+            angle += 0.05f;
         }
     }
     d->Release();//一応
