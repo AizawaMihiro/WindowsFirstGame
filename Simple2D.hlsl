@@ -28,7 +28,7 @@ struct VS_OUT
 //───────────────────────────────────────
 // 頂点シェーダ
 //───────────────────────────────────────
-VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
+VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 {
 	//ピクセルシェーダーへ渡す情報
     VS_OUT outData;
@@ -38,13 +38,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
     outData.pos = mul(pos, matWVP);
     outData.uv = uv;
     
-    normal = mul(pos, matNormal);
-    normal = normalize(normal);
-    normal.w = 0; //w成分は0にしておく
-    
-    float4 light = float4(-1, 0.5, -0.7, 0);
-    light = normalize(light);
-    outData.color = dot(normal, light);
+    outData.color = float4(1, 1, 1, 1);
 
 	//まとめて出力
     return outData;

@@ -16,40 +16,40 @@ HRESULT Dice::Initialize()
 	VERTEX vertices[] =
 	{
 		//1
-		{ XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, -1.0f, 0.0f)},
-		{ XMVectorSet(1.0f,   1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f, 1.0f, -1.0f, 0.0f)},
-		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f,-1.0f, -1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,   1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, -1.0f, 0.0f)},
 
 		//6
-		{ XMVectorSet(1.0f,   1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f, 1.0f, 1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f,-1.0f, 1.0f, 0.0f)},
-		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 1.0f,-1.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,   1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, 1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet( 0.0f, 0.0f, 1.0f, 0.0f)},
 
 		//2
-		{ XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f)},
-		{ XMVectorSet(1.0f,  1.0f,  1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f,  1.0f, 0.0f)},
-		{ XMVectorSet(1.0f, -1.0f,  1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, -1.0f,  1.0f, 0.0f)},
-		{ XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  1.0f,  1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(1.0f, -1.0f,  1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)},
 
 		//5
-		{ XMVectorSet(-1.0f,  1.0f,  1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f,  1.0f,  1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f, -1.0f,  1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, -1.0f,  1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f,  1.0f,  1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(-1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f,  1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f)},
 
 		//3
-		{ XMVectorSet(-1.0f, 1.0f,-1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f,-1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f)},
-		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f)},
-		{ XMVectorSet(1.0f,  1.0f,-1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  1.0f,-1.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, 1.0f,-1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, 1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  1.0f,-1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},
 
 		//4
-		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f)},
-		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(-1.0f, -1.0f,-1.0f, 0.0f)},
-		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(1.0f,  -1.0f,-1.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  -1.0f, 1.0f, 0.0f), XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(-1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f)},
+		{ XMVectorSet(1.0f,  -1.0f, -1.0f, 0.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f,  1.0f, 0.0f, 0.0f)},
 
 	};
 	int index[] = {
@@ -122,9 +122,12 @@ HRESULT Dice::Initialize()
 
 void Dice::Draw(XMMATRIX& worldMatrix)
 {
+	Direct3D::SetShader(SHADER_3D);	//シェーダーをセット
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matNormal = XMMatrixInverse(nullptr, worldMatrix);	//法線行列は逆転行列を使う
+	cb.matWorld = XMMatrixTranspose(worldMatrix);
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
 	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//再開

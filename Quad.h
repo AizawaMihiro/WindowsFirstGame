@@ -10,6 +10,8 @@ using namespace DirectX;
 struct CONSTANT_BUFFER
 {
 	XMMATRIX	matWVP;
+	XMMATRIX	matNormal;
+	XMMATRIX	matWorld;
 };
 //í∏ì_èÓïÒ
 struct VERTEX
