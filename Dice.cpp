@@ -122,7 +122,7 @@ HRESULT Dice::Initialize()
 
 void Dice::Draw(XMMATRIX& worldMatrix)
 {
-	Direct3D::SetShader(SHADER_3D);	//シェーダーをセット
+	//Direct3D::SetShader(SHADER_3D);	//シェーダーをセット	//Direck3Dの変更に伴って変更される
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
