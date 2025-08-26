@@ -147,6 +147,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="WindowsFirstGame.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="Direct3D.cpp" />
     <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="WindowsFirstGame.cpp" />
   </ItemGroup>

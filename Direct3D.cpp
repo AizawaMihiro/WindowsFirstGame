@@ -105,7 +105,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 
 }
 
-#if 0
+#if 1
 HRESULT Direct3D::InitShader()
 {
     if (FAILED(InitShader3D()))

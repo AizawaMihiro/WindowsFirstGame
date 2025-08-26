@@ -31,9 +31,10 @@
 #include "framework.h"
 #include "WindowsFirstGame.h"
 #include "Direct3D.h"
-#include "Quad.h"
+//#include "Quad.h"
 #include "Camera.h"
-#include "Dice.h"
+//#include "Dice.h"
+#include "Sprite.h"
 
 
 HWND hWnd = nullptr;
@@ -112,8 +113,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg = {};
     Camera::Initialize();
     //Quad* d = new Quad();
-    Dice* d = new Dice();
-    hr = d->Initialize();
+    //Dice* d = new Dice();
+	Sprite* sprite = new Sprite();
+    hr = sprite->Initialize();
     if (FAILED(hr))
     {
 		return 0;
@@ -136,14 +138,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             Direct3D::BeginDraw();
 
             //描画処理
-            XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
-            d->Draw(mat);
-            Direct3D::EndDraw();
-            angle += 0.05f;
+            //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
+            //d->Draw(mat);
+            //Direct3D::EndDraw();
+            //angle += 0.05f;
+			XMMATRIX mat = XMMatrixIdentity();
+			sprite->Draw(mat);
         }
     }
-    d->Release();//一応
-    SAFE_DELETE(d);
+    //d->Release();//一応
+    //SAFE_DELETE(d);
+	sprite->Release();
+	SAFE_DELETE(sprite);
     Direct3D::Release();
 
     return (int) msg.wParam;
