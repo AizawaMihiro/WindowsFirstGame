@@ -35,6 +35,8 @@
 #include "Camera.h"
 //#include "Dice.h"
 #include "Sprite.h"
+#include "Transform.h"
+#include "Fbx.h"
 
 
 HWND hWnd = nullptr;
@@ -114,8 +116,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Camera::Initialize();
     //Quad* d = new Quad();
     //Dice* d = new Dice();
-	Sprite* sprite = new Sprite();
-    hr = sprite->Initialize();
+	//Sprite* sprite = new Sprite();
+ //   hr = sprite->Initialize();
+	Fbx* fbx = new Fbx();
+	fbx->Load("Assets/Oden.fbx");//非存在のファイル
     if (FAILED(hr))
     {
 		return 0;
@@ -142,14 +146,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             //d->Draw(mat);
             //Direct3D::EndDraw();
             //angle += 0.05f;
-			XMMATRIX mat = XMMatrixIdentity();
-			sprite->Draw(mat);
+			//XMMATRIX mat = XMMatrixIdentity();
+
+            Transform trans;
+            trans.position_.x = 1.0f;
+            trans.rotate_.z = 0.0f;
+            trans.Calclation();
+
+			//sprite->Draw(mat);
+            fbx->Draw(trans);
+
+			Direct3D::EndDraw();
         }
     }
     //d->Release();//一応
     //SAFE_DELETE(d);
-	sprite->Release();
-	SAFE_DELETE(sprite);
+	//sprite->Release();
+	//SAFE_DELETE(sprite);
     Direct3D::Release();
 
     return (int) msg.wParam;
