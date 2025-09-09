@@ -1,18 +1,32 @@
 #include "Fbx.h"
 #include "Direct3D.h"
 #include "Camera.h"
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 Fbx::Fbx() :
 	pVertexBuffer_(nullptr),
 	pIndexBuffer_(nullptr),
 	pConstantBuffer_(nullptr),
 	vertexCount_(0),
-	polygonCount_(0)
+	polygonCount_(0),
+	materialCount_(0)
 {
 }
 
 HRESULT Fbx::Load(std::string fileName)
 {	
+	//テクスチャのパスをAssetsに変更
+	std::string subDir("Assets");
+	fs::path  currPath, basePath;
+	currPath = fs::current_path();
+	basePath = currPath;
+	currPath = currPath / subDir;
+	//fs::path subPath(currPath.string() + "\\" + subDir);
+	assert(fs::exists(currPath));//Assetsフォルダがあるか確認
+	fs::current_path(currPath);
+
 	//マネージャを生成
 	FbxManager* pFbxManager = FbxManager::Create();
 
@@ -41,6 +55,8 @@ HRESULT Fbx::Load(std::string fileName)
 	InitConstantBuffer();	//コンスタントバッファ準備
 	InitMaterial(pNode);	//マテリアル準備
 
+	fs::current_path(basePath);	//カレントディレクトリを元に戻す
+
 	//マネージャ解放
 	pFbxManager->Destroy();
 	return S_OK;
@@ -49,13 +65,27 @@ HRESULT Fbx::Load(std::string fileName)
 void Fbx::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_TYPE::SHADER_3D);
-	D3D11_MAPPED_SUBRESOURCE pdata;
+	transform.Calclation();
+
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-	cb.matNormal = XMMatrixTranspose(transform.GetWorldMatrix());
-	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
-	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//再開
+	cb.matNormal = transform.GetWorldMatrix();
+
+	//for (int i = 0; i < materialCount_; i++)
+	//{
+	//	if (pMaterialList_[i].pTexture)
+	//	{
+	//		cb.materialFlag = TRUE;
+	//		cb.diffuse = XMFLOAT4(1, 1, 1, 1);
+	//	}
+	//	else
+	//	{
+	//		cb.materialFlag = FALSE;
+	//		cb.diffuse = pMaterialList_[i].diffuse;
+	//	}
+	//}
+
+
 
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
@@ -64,6 +94,23 @@ void Fbx::Draw(Transform& transform)
 
 	for (int i = 0; i < materialCount_; i++)
 	{
+		if (pMaterialList_[i].pTexture)
+		{
+			cb.materialFlag = TRUE;
+			cb.diffuse = XMFLOAT4(1, 1, 1, 1);
+		}
+		else
+		{
+			cb.materialFlag = FALSE;
+			cb.diffuse = pMaterialList_[i].diffuse;
+		}
+
+		//コンスタントバッファにデータ転送
+		D3D11_MAPPED_SUBRESOURCE pdata;
+		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのリソースアクセスを一時止める
+		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+		Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//再開
+
 		// インデックスバッファーをセット
 		stride = sizeof(int);
 		offset = 0;
@@ -83,7 +130,7 @@ void Fbx::Draw(Transform& transform)
 			Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 		}
 
-		Direct3D::pContext->DrawIndexed(polygonCount_ * 3, 0, 0);
+		Direct3D::pContext->DrawIndexed(indexCount_[i], 0, 0);
 	}
 	
 }
@@ -118,6 +165,11 @@ void Fbx::InitVertex(FbxMesh* mesh)
 			int uvIndex = mesh->GetTextureUVIndex(poly, vertex, FbxLayerElement::eTextureDiffuse);
 			FbxVector2  uv = pUV->GetDirectArray().GetAt(uvIndex);
 			vertices[index].uv = XMVectorSet((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f, 0.0f);
+
+			//頂点の法線
+			FbxVector4 normal;
+			mesh->GetPolygonVertexNormal(poly, vertex, normal);
+			vertices[index].normal = XMVectorSet((float)normal[0], (float)normal[1], (float)normal[2], 0.0f);
 		}
 	}
 	// 頂点データ用バッファの設定
@@ -139,6 +191,8 @@ void Fbx::InitIndex(FbxMesh* mesh)
 	pIndexBuffer_ = new ID3D11Buffer*[materialCount_];
 
 	int* index = new int[polygonCount_ * 3];
+	indexCount_ = std::vector<int>(materialCount_);
+	//indexCount_.resize(materialCount_);
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -161,8 +215,10 @@ void Fbx::InitIndex(FbxMesh* mesh)
 					count++;
 				}
 			}
-
 		}
+		indexCount_[i] = count;
+
+
 		// インデックスバッファを生成する
 		D3D11_BUFFER_DESC   bd;
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -238,7 +294,7 @@ void Fbx::InitMaterial(FbxNode* pNode)
 
 #else
 	//vectorに格納する方法	陽悦先生
-	materialList_.resize(materialCount_);
+	pMaterialList_.resize(materialCount_);
 	for (int i = 0; i < materialCount_; i++)
 	{
 		//i番目のマテリアル情報を取得
@@ -259,13 +315,21 @@ void Fbx::InitMaterial(FbxNode* pNode)
 			if (fs::is_regular_file(tPath))
 			{
 				pMaterialList_[i].pTexture = new Texture;
-				pMaterialList_[i].pTexture->Load(textureFilePath);
+				pMaterialList_[i].pTexture->Load(tPath.string());
+			}
+			else
+			{
+
 			}
 		}
 		//テクスチャ無し
 		else
 		{
 			pMaterialList_[i].pTexture = nullptr;
+
+			//マテリアルの色を取得
+			FbxDouble3 color = ((FbxSurfaceLambert*)pMaterial)->Diffuse.Get();
+			pMaterialList_[i].diffuse = XMFLOAT4((float)color[0], (float)color[1], (float)color[2], 1.0f);
 		}
 	}
 

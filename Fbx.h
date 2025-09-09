@@ -6,9 +6,6 @@
 #include "Transform.h"
 #include "Texture.h"
 #include <vector>
-#include <filesystem>
-
-namespace fs = std::filesystem;
 
 #pragma comment(lib, "LibFbxSDK-MD.lib")
 #pragma comment(lib, "LibXml2-MD.lib")
@@ -20,25 +17,30 @@ class Fbx
 	{
 		XMMATRIX	matWVP;
 		XMMATRIX	matNormal;
+		XMFLOAT4	diffuse;
+		BOOL	materialFlag;	//マテリアルがあるかどうか
 	};
 
 	struct VERTEX
 	{
 		XMVECTOR position;
 		XMVECTOR uv;
+		XMVECTOR normal;
 	};
 
 	struct MATERIAL
 	{
 		Texture* pTexture;
+		XMFLOAT4 diffuse;
 	};
 
 	ID3D11Buffer* pVertexBuffer_;
 	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
-	MATERIAL* pMaterialList_;
+	//MATERIAL* pMaterialList_;
 	//pMaterialList_をvectorで管理するためmaterialList_を追加
-	std::vector<MATERIAL*> materialList_;
+	std::vector<MATERIAL> pMaterialList_;
+	std::vector<int> indexCount_;	//マテリアルごとのインデックス数を格納する配列
 
 	int vertexCount_;
 	int polygonCount_;

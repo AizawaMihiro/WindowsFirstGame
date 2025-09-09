@@ -119,7 +119,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//Sprite* sprite = new Sprite();
  //   hr = sprite->Initialize();
 	Fbx* fbx = new Fbx();
-	fbx->Load("Assets/Oden.fbx");//非存在のファイル
+	fbx->Load("Oden.fbx");//非存在のファイル
     if (FAILED(hr))
     {
 		return 0;
