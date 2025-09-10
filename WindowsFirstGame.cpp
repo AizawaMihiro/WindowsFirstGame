@@ -36,6 +36,7 @@
 //#include "Sprite.h"
 #include "Transform.h"
 #include "Fbx.h"
+#include "Input.h"
 
 
 HWND hWnd = nullptr;//ウィンドウの管理を行う番号を入れる型を定義（複数窓用意する場合は複数個宣言）
@@ -109,6 +110,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	//int angle = 0;
 
+    Input::Initialize(hWnd);
     Camera::Initialize();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSFIRSTGAME));
@@ -140,6 +142,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             Camera::Update();
             Direct3D::BeginDraw();
 
+            //入力情報の更新
+			Input::Update();
+
             //描画処理
             //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
             //d->Draw(mat);
@@ -151,13 +156,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             trans.rotate_.y += 0.1f;
             trans.Calclation();
 
+            if (Input::IsKeyDown(DIK_ESCAPE))
+            {
+                static int cnt = 0;
+                cnt++;
+                if (cnt >= 3)
+                {
+                    PostQuitMessage(0);
+                }
+            }
+
 			//sprite->Draw(mat);
             fbx->Draw(trans);
 
 			Direct3D::EndDraw();
         }
     }
-
+	fbx->Release();
+	delete fbx;
+	Input::Release();
     Direct3D::Release();
 
     return (int) msg.wParam;
