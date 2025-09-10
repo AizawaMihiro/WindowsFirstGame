@@ -9,6 +9,8 @@ namespace Direct3D
 	ID3D11DeviceContext* pContext;		//デバイスコンテキスト
 	IDXGISwapChain* pSwapChain;		//スワップチェイン
 	ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
+    ID3D11Texture2D* pDepthStencil;			//深度ステンシル
+    ID3D11DepthStencilView* pDepthStencilView;		//深度ステンシルビュー
 
     struct SHADER_BUMDLE
     {
@@ -89,14 +91,32 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
     vp.TopLeftX = 0;	//左
     vp.TopLeftY = 0;	//上
 
+	///////////////////////////深度ステンシルビュー作成///////////////////////////////
+    //深度ステンシルビューの作成
+    D3D11_TEXTURE2D_DESC descDepth;
+    descDepth.Width = winW;
+    descDepth.Height = winH;
+    descDepth.MipLevels = 1;
+    descDepth.ArraySize = 1;
+    descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+    descDepth.SampleDesc.Count = 1;
+    descDepth.SampleDesc.Quality = 0;
+    descDepth.Usage = D3D11_USAGE_DEFAULT;
+    descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+    descDepth.CPUAccessFlags = 0;
+    descDepth.MiscFlags = 0;
+    pDevice->CreateTexture2D(&descDepth, NULL, &pDepthStencil);
+    pDevice->CreateDepthStencilView(pDepthStencil, NULL, &pDepthStencilView);
+
     //データを画面に描画するための一通りの設定（パイプライン）
     pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
-    pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // 描画先を設定
+    pContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);            // 描画先を設定
     pContext->RSSetViewports(1, &vp);
 
     //シェーダー準備
     HRESULT hr;
     hr = InitShader();
+
     if (FAILED(hr))
     {
         return hr;
@@ -105,7 +125,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 
 }
 
-#if 1
+
 HRESULT Direct3D::InitShader()
 {
     if (FAILED(InitShader3D()))
@@ -139,7 +159,7 @@ HRESULT Direct3D::InitShader3D()
     D3D11_INPUT_ELEMENT_DESC layout[] = {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
-        { "NORMAL",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(DirectX::XMVECTOR) * 2 ,	D3D11_INPUT_PER_VERTEX_DATA, 0 },//法線
+        { "NORMAL",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(DirectX::XMVECTOR)+sizeof(DirectX::XMFLOAT2),D3D11_INPUT_PER_VERTEX_DATA, 0},//法線
     };
     hr = pDevice->CreateInputLayout(layout, 3, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &(shaderBundle[SHADER_3D], pVertexLayout));
     if (FAILED(hr))
@@ -150,7 +170,7 @@ HRESULT Direct3D::InitShader3D()
 
     SAFE_RELEASE(pCompileVS);
 
-    // ピクセルシェーダの作成（コンパイル）
+    //ピクセルシェーダの作成（コンパイル）
     ID3DBlob* pCompilePS = nullptr;
     D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
     assert(pCompilePS != nullptr);
@@ -245,69 +265,7 @@ void Direct3D::SetShader(SHADER_TYPE type)
     pContext->IASetInputLayout(shaderBundle[type].pVertexLayout);	//頂点インプットレイアウト
     pContext->RSSetState(shaderBundle[type].pRasterizerState);		//ラスタライザー   
 }
-#else
 
-HRESULT Direct3D::InitShader()
-{
-    HRESULT hr;
-
-    // 頂点シェーダの作成（コンパイル）
-    ID3DBlob* pCompileVS = nullptr;
-    D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
-    assert(pCompileVS != nullptr);
-
-    hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
-    if (FAILED(hr))
-    {
-        MessageBox(nullptr, L"頂点シェーダーの作成に失敗しました", L"エラー", MB_OK);
-        return hr;
-    }
-
-    //頂点インプットレイアウト
-    D3D11_INPUT_ELEMENT_DESC layout[] = {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
-        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },//UV座標
-        { "NORMAL",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(DirectX::XMVECTOR) * 2 ,	D3D11_INPUT_PER_VERTEX_DATA, 0 },//法線
-    };
-    hr = pDevice->CreateInputLayout(layout, 3, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
-    if (FAILED(hr))
-    {
-        MessageBox(nullptr, L"頂点インプットレイアウトの作成に失敗しました", L"エラー", MB_OK);
-        return hr;
-    }
-
-    SAFE_RELEASE(pCompileVS);
-
-    // ピクセルシェーダの作成（コンパイル）
-    ID3DBlob* pCompilePS = nullptr;
-    D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
-    assert(pCompilePS != nullptr);
-    hr = pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
-    if (FAILED(hr))
-    {
-        MessageBox(nullptr, L"ピクセルシェーダーの作成に失敗しました", L"エラー", MB_OK);
-        return hr;
-    }
-
-    SAFE_RELEASE(pCompilePS);
-
-    //ラスタライザ作成
-    D3D11_RASTERIZER_DESC rdc = {};
-    rdc.CullMode = D3D11_CULL_BACK;
-    rdc.FillMode = D3D11_FILL_SOLID;
-    rdc.FrontCounterClockwise = FALSE;
-    pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
-
-    //それぞれをデバイスコンテキストにセット
-    pContext->VSSetShader(pVertexShader, NULL, 0);	//頂点シェーダー
-    pContext->PSSetShader(pPixelShader, NULL, 0);	//ピクセルシェーダー
-    pContext->IASetInputLayout(pVertexLayout);	//頂点インプットレイアウト
-    pContext->RSSetState(pRasterizerState);		//ラスタライザー
-
-    return S_OK;
-}
-
-#endif // 0
 
 
 
@@ -319,6 +277,9 @@ void Direct3D::BeginDraw()
     float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
     //画面をクリア
     pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
+
+    //深度バッファクリア
+    pContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 //描画終了

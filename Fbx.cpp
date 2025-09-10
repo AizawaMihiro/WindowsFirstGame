@@ -85,8 +85,6 @@ void Fbx::Draw(Transform& transform)
 	//	}
 	//}
 
-
-
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
@@ -208,7 +206,6 @@ void Fbx::InitIndex(FbxMesh* mesh)
 			//マテリアル番号が同じならインデックス情報として追加
 			if (mtlId == i)
 			{
-				//3頂点分
 				for (DWORD vertex = 0; vertex < 3; vertex++)
 				{
 					index[count] = mesh->GetPolygonVertex(poly, vertex);
@@ -217,7 +214,6 @@ void Fbx::InitIndex(FbxMesh* mesh)
 			}
 		}
 		indexCount_[i] = count;
-
 
 		// インデックスバッファを生成する
 		D3D11_BUFFER_DESC   bd;
@@ -251,48 +247,6 @@ void Fbx::InitConstantBuffer()
 
 void Fbx::InitMaterial(FbxNode* pNode)
 {
-#if 0
-	//配列に格納する方法	資料より
-	pMaterialList_ = new MATERIAL[materialCount_];
-
-	for (int i = 0; i < materialCount_; i++)
-	{
-		//i番目のマテリアル情報を取得
-		FbxSurfaceMaterial* pMaterial = pNode->GetMaterial(i);
-
-		//テクスチャ情報
-		FbxProperty  lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
-
-		//テクスチャの数数
-		int fileTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
-
-		//テクスチャあり
-		if (fileTextureCount > 0)
-		{
-			FbxFileTexture* textureInfo = lProperty.GetSrcObject<FbxFileTexture>(0);
-			const char* textureFilePath = textureInfo->GetRelativeFileName();
-
-			//ファイル名+拡張だけにする
-			char name[_MAX_FNAME];	//ファイル名
-			char ext[_MAX_EXT];	//拡張子
-			_splitpath_s(textureFilePath, nullptr, 0, nullptr, 0, name, _MAX_FNAME, ext, _MAX_EXT);
-			wsprintf(name, "%s%s", name, ext);
-
-			//上のエラーはcharからwcharに変換していないためのもの
-			//あとはLoad関数の方でカレントディレクトリの変更を行う
-
-			//ファイルからテクスチャ作成
-			pMaterialList_[i].pTexture = new Texture;
-			pMaterialList_[i].pTexture->Load(name);
-		}
-		//テクスチャ無し
-		else
-		{
-
-		}
-	}
-
-#else
 	//vectorに格納する方法	陽悦先生
 	pMaterialList_.resize(materialCount_);
 	for (int i = 0; i < materialCount_; i++)
@@ -328,11 +282,10 @@ void Fbx::InitMaterial(FbxNode* pNode)
 			pMaterialList_[i].pTexture = nullptr;
 
 			//マテリアルの色を取得
-			FbxDouble3 color = ((FbxSurfaceLambert*)pMaterial)->Diffuse.Get();
-			pMaterialList_[i].diffuse = XMFLOAT4((float)color[0], (float)color[1], (float)color[2], 1.0f);
+			FbxSurfaceLambert* pMaterial = (FbxSurfaceLambert*)pNode->GetMaterial(i);
+			FbxDouble3  diffuse = pMaterial->Diffuse;
+			pMaterialList_[i].diffuse = XMFLOAT4((float)diffuse[0], (float)diffuse[1], (float)diffuse[2], 1.0f);
 		}
 	}
-
-#endif // 0
 
 }

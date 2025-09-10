@@ -26,11 +26,13 @@ void Camera::Update()
 //位置を設定
 void Camera::SetPosition(XMVECTOR position)
 {
+	position_ = position;
 }
 
 //焦点を設定
 void Camera::SetTarget(XMVECTOR target)
 {
+	target_ = target;
 }
 
 //ビュー行列を取得

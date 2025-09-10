@@ -1,5 +1,4 @@
 ﻿// WindowsFirstGame.cpp : アプリケーションのエントリ ポイントを定義します。
-//
 
 /*DirectX 11 課題
 ①
@@ -34,12 +33,12 @@
 //#include "Quad.h"
 #include "Camera.h"
 //#include "Dice.h"
-#include "Sprite.h"
+//#include "Sprite.h"
 #include "Transform.h"
 #include "Fbx.h"
 
 
-HWND hWnd = nullptr;
+HWND hWnd = nullptr;//ウィンドウの管理を行う番号を入れる型を定義（複数窓用意する場合は複数個宣言）
 
 
 #define MAX_LOADSTRING 100
@@ -85,7 +84,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //szWindowClass = WIN_CLASS_NAME;
 
     // グローバル文字列を初期化する
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);//タイトルバー部分の文字列の設定
     LoadStringW(hInstance, IDC_WINDOWSFIRSTGAME, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
@@ -108,18 +107,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 0;
     }
 
-    float angle = 0.0f;
+	//int angle = 0;
+
+    Camera::Initialize();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSFIRSTGAME));
 
     MSG msg = {};
-    Camera::Initialize();
-    //Quad* d = new Quad();
-    //Dice* d = new Dice();
-	//Sprite* sprite = new Sprite();
- //   hr = sprite->Initialize();
+
 	Fbx* fbx = new Fbx();
-	fbx->Load("Oden.fbx");//非存在のファイル
+	fbx->Load("oden.fbx");
+
+
     if (FAILED(hr))
     {
 		return 0;
@@ -144,13 +143,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             //描画処理
             //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
             //d->Draw(mat);
-            //Direct3D::EndDraw();
             //angle += 0.05f;
 			//XMMATRIX mat = XMMatrixIdentity();
 
-            Transform trans;
+            static Transform trans;
             trans.position_.x = 1.0f;
-            trans.rotate_.z = 0.0f;
+            trans.rotate_.y += 0.1f;
             trans.Calclation();
 
 			//sprite->Draw(mat);
@@ -159,10 +157,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			Direct3D::EndDraw();
         }
     }
-    //d->Release();//一応
-    //SAFE_DELETE(d);
-	//sprite->Release();
-	//SAFE_DELETE(sprite);
+
     Direct3D::Release();
 
     return (int) msg.wParam;
@@ -265,8 +260,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // グローバル変数にインスタンス ハンドルを格納する
 
+   RECT winRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+   AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
+   int winW = winRect.right - winRect.left;     //ウィンドウ幅
+   int winH = winRect.bottom - winRect.top;     //ウィンドウ高さ
+
    hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);//ここでウィンドウを作るので返り値をもらっておく
 
    if (!hWnd)
    {
@@ -289,14 +289,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 中止メッセージを表示して戻る
 //
 //
-/*
-④
-メッセージループとコールバックは、GUIアプリケーションやイベント駆動型プログラミングにおいて、非同期処理を実現するための重要な要素です。メッセージループは、アプリケーションがイベントやメッセージを処理するための中心的な仕組みであり、コールバック関数は、特定のイベントや条件が発生したときに実行される関数です。﻿
-メッセージループは、コールバック関数を呼び出すための基盤を提供し、コールバック関数は、メッセージループによって処理されるイベントに対応する処理を実装します。
-*/
+
+//各ウィンドウに何かが起こったことを通知する関数　OSから勝手に呼ばれる
+//hWnd...受け取ったウィンドウのハンドル
+//massage...何が起きたか
+//wParam・lParam...追加情報のパラメータ
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    switch (message)
+    switch (message)//送られたメッセージで処理を分岐
     {
     case WM_COMMAND:
         {
@@ -332,6 +332,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+/*
+④
+メッセージループとコールバックは、GUIアプリケーションやイベント駆動型プログラミングにおいて、非同期処理を実現するための重要な要素です。メッセージループは、アプリケーションがイベントやメッセージを処理するための中心的な仕組みであり、コールバック関数は、特定のイベントや条件が発生したときに実行される関数です。﻿
+メッセージループは、コールバック関数を呼び出すための基盤を提供し、コールバック関数は、メッセージループによって処理されるイベントに対応する処理を実装します。
+*/
 // バージョン情報ボックスのメッセージ ハンドラーです。
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
