@@ -327,9 +327,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
-            case WM_MOUSEMOVE:
-                Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
-                return 0;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
@@ -345,6 +342,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
+        break;
+    case WM_MOUSEMOVE:
+        {
+            int x = LOWORD(lParam);
+            int y = HIWORD(lParam);
+           Input::SetMousePosition(x, y);
+            //mousePosition = XMVectorSet((float)x, (float)y, 0.0f, 0.0f);
+            OutputDebugStringA((std::to_string(x) + "," + std::to_string(y) + "\n").c_str());
+        }
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);

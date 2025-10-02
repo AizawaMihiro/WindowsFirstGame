@@ -6,7 +6,11 @@ namespace Input
 	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;
 	BYTE keyState[256] = { 0 };
 	BYTE prevKeyState[256] = { 0 };
+	//マウスのインプット
 	XMVECTOR mousePosition;
+	LPDIRECTINPUTDEVICE8 pMouseDevice = nullptr;
+	DIMOUSESTATE mouseState;//マウスの状態
+	DIMOUSESTATE prevMouseState;
 
 	void Initialize(HWND hWnd)
 	{
