@@ -173,7 +173,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 	fbx->Release();
-	delete fbx;
+	SAFE_DELETE(fbx);
 	Input::Release();
     Direct3D::Release();
 
@@ -327,6 +327,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
+            case WM_MOUSEMOVE:
+                Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
+                return 0;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }

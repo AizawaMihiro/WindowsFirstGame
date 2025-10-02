@@ -6,6 +6,7 @@ namespace Input
 	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;
 	BYTE keyState[256] = { 0 };
 	BYTE prevKeyState[256] = { 0 };
+	XMVECTOR mousePosition;
 
 	void Initialize(HWND hWnd)
 	{
@@ -18,7 +19,11 @@ namespace Input
 
 	void Update()
 	{
-		memcpy(prevKeyState, keyState, 256);
+		memcpy(prevKeyState, keyState, sizeof(keyState));
+		/*for (auto i = 0; i < 256; i++)
+		{
+			prevKeyState[i] = keyState[i];
+		}*/
 
 		pKeyDevice->Acquire();
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
@@ -54,6 +59,15 @@ namespace Input
 	void Release()
 	{
 		SAFE_RELEASE(pDInput);
+	}
+	XMVECTOR GetMousePosition()
+	{
+		return mousePosition;
+	}
+
+	void SetMousePosition(int x, int y)
+	{
+		mousePosition = XMVectorSet((float)x, (float)y, 0.0f, 0.0f);
 	}
 }
 
