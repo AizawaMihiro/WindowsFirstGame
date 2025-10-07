@@ -19,6 +19,11 @@ namespace Input
 		pDInput->CreateDevice(GUID_SysKeyboard, &pKeyDevice, nullptr);
 		pKeyDevice->SetDataFormat(&c_dfDIKeyboard);
 		pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+
+		//ƒ}ƒEƒX‚Ì‰Šú‰»
+		pDInput->CreateDevice(GUID_SysMouse, &pMouseDevice, nullptr);
+		pMouseDevice->SetDataFormat(&c_dfDIMouse);
+		pMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 	}
 
 	void Update()
@@ -72,6 +77,33 @@ namespace Input
 	void SetMousePosition(int x, int y)
 	{
 		mousePosition = XMVectorSet((float)x, (float)y, 0.0f, 0.0f);
+	}
+
+	bool IsMouseButton(int btnCode)
+	{
+		if (mouseState.rgbButtons[btnCode] & 0x80)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsMouseButtonDown(int btnCode)
+	{
+		if (mouseState.rgbButtons[btnCode] & 0x80 && ~prevMouseState.rgbButtons[btnCode] & 0x80)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsMouseButtonUp(int btnCode)
+	{
+		if (~mouseState.rgbButtons[btnCode] & 0x80 && prevMouseState.rgbButtons[btnCode] & 0x80)
+		{
+			return true;
+		}
+		return false;
 	}
 }
 
