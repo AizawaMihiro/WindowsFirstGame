@@ -28,15 +28,12 @@
 */
 
 #include "framework.h"
-#include "WindowsFirstGame.h"
-#include "Direct3D.h"
-//#include "Quad.h"
-#include "Camera.h"
-//#include "Dice.h"
-//#include "Sprite.h"
-#include "Transform.h"
-#include "Fbx.h"
-#include "Input.h"
+#include "Main.h"
+#include "Engine/Direct3D.h"
+#include "Engine/Camera.h"
+#include "Engine/Transform.h"
+#include "Engine/Fbx.h"
+#include "Engine/Input.h"
 
 
 HWND hWnd = nullptr;//ウィンドウの管理を行う番号を入れる型を定義（複数窓用意する場合は複数個宣言）
@@ -166,7 +163,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 }
             }
 
-			//sprite->Draw(mat);
             fbx->Draw(trans);
 
 			Direct3D::EndDraw();

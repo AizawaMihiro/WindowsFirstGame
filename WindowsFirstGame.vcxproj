@@ -24,6 +24,7 @@
     <ProjectGuid>{eb99399e-b5fc-4f46-99d8-3f7a1d09380c}</ProjectGuid>
     <RootNamespace>WindowsFirstGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>MyGameEngin</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -151,31 +152,29 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Dice.h" />
-    <ClInclude Include="Direct3D.h" />
-    <ClInclude Include="Fbx.h" />
+    <ClInclude Include="Engine\Camera.h" />
+    <ClInclude Include="Engine\Direct3D.h" />
+    <ClInclude Include="Engine\Fbx.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Quad.h" />
+    <ClInclude Include="Engine\Input.h" />
+    <ClInclude Include="Engine\Quad.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Engine\Sprite.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="WindowsFirstGame.h" />
+    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\Transform.h" />
+    <ClInclude Include="Main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Dice.cpp" />
-    <ClCompile Include="Direct3D.cpp" />
-    <ClCompile Include="Fbx.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Quad.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="WindowsFirstGame.cpp" />
+    <ClCompile Include="Engine\Camera.cpp" />
+    <ClCompile Include="Engine\Direct3D.cpp" />
+    <ClCompile Include="Engine\Fbx.cpp" />
+    <ClCompile Include="Engine\Input.cpp" />
+    <ClCompile Include="Engine\Quad.cpp" />
+    <ClCompile Include="Engine\Sprite.cpp" />
+    <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\Transform.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsFirstGame.rc" />
