@@ -32,9 +32,8 @@
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
 #include "Engine/Transform.h"
-#include "Engine/Fbx.h"
 #include "Engine/Input.h"
-
+#include "Engine/RootJob.h"
 
 HWND hWnd = nullptr;//ウィンドウの管理を行う番号を入れる型を定義（複数窓用意する場合は複数個宣言）
 
@@ -44,6 +43,8 @@ HWND hWnd = nullptr;//ウィンドウの管理を行う番号を入れる型を�
 const wchar_t* WIN_CLASS_NAME = L"SAMPLE GAME WINDOW";
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
+
+RootJob* pRootJob = nullptr;
 
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
@@ -114,9 +115,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg = {};
 
-	Fbx* fbx = new Fbx();
-	fbx->Load("oden.fbx");
-
+	pRootJob = new RootJob(nullptr);
+	pRootJob->Initialize();
 
     if (FAILED(hr))
     {
@@ -137,21 +137,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             //ゲームの処理
             Camera::Update();
-            Direct3D::BeginDraw();
 
             //入力情報の更新
 			Input::Update();
 
-            //描画処理
-            //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle));
-            //d->Draw(mat);
-            //angle += 0.05f;
-			//XMMATRIX mat = XMMatrixIdentity();
+			pRootJob->Update();
 
-            static Transform trans;
-            trans.position_.x = 1.0f;
-            trans.rotate_.y += 0.1f;
-            trans.Calclation();
+            //描画処理
+            Direct3D::BeginDraw();
+
+			//pRootJobから全てのオブジェクトを辿って描画していく
+
+			Direct3D::EndDraw();
 
             if (Input::IsKeyDown(DIK_ESCAPE))
             {
@@ -162,15 +159,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     PostQuitMessage(0);
                 }
             }
-
-            fbx->Draw(trans);
-
-			Direct3D::EndDraw();
         }
     }
-	fbx->Release();
-	SAFE_DELETE(fbx);
 	Input::Release();
+	pRootJob->Release();
     Direct3D::Release();
 
     return (int) msg.wParam;
