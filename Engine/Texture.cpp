@@ -27,9 +27,7 @@ HRESULT Texture::Load(std::string fileName)
 
 	if (FAILED(hr))
 	{
-
 		return S_FALSE;
-
 	}
 
 	D3D11_SAMPLER_DESC  SamDesc;

@@ -147,6 +147,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             Direct3D::BeginDraw();
 
 			//pRootJobから全てのオブジェクトを辿って描画していく
+			pRootJob->DrawSub();
 
 			Direct3D::EndDraw();
 
