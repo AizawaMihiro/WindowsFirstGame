@@ -13,9 +13,11 @@ PlayScene::~PlayScene()
 void PlayScene::Initialize()
 {
 	//Player¶¬
-	Player* pPlayer = new Player(this);
-	pPlayer->Initialize();
-	childList_.push_back(pPlayer);
+	//Player* pPlayer = new Player(this);
+	//pPlayer->Initialize();
+	//childList_.push_back(pPlayer);
+
+	Instantiate<Player>(this);
 }
 
 void PlayScene::Update()
