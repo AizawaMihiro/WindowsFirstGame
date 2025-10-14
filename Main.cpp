@@ -35,6 +35,8 @@
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
 
+#pragma comment(lib,"winmm.lib") //timeGetTimeを使うために必要
+
 HWND hWnd = nullptr;//ウィンドウの管理を行う番号を入れる型を定義（複数窓用意する場合は複数個宣言）
 
 
@@ -135,13 +137,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         //メッセージなし
         {
+			static int FrameCnt = 0;
+			static DWORD startTime = timeGetTime();
+			DWORD nowTime = timeGetTime();
+
+			static DWORD lastUpdateTime = nowTime;
+
+            if (nowTime - startTime >= 1000.f)
+            {
+                string str = "FPS:" + std::to_string(FrameCnt);
+                SetWindowTextA(hWnd, str.c_str());
+
+				FrameCnt = 0;
+				startTime = nowTime;
+            }
+			//60FPS制限
+            if (nowTime - lastUpdateTime <= 1000.f/60)
+            {
+                continue;
+            }
+			lastUpdateTime = nowTime;
+			FrameCnt++;
+
             //ゲームの処理
             Camera::Update();
 
             //入力情報の更新
 			Input::Update();
 
-			pRootJob->Update();
+			pRootJob->UpdateSub();
 
             //描画処理
             Direct3D::BeginDraw();
