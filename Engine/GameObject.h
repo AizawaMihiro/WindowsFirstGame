@@ -27,6 +27,12 @@ public:
 	void DrawSub();
 	void UpdateSub();
 	void ReleaseSub();
+
+	void SetPosition(XMFLOAT3 position);
+	void SetPosition(float x, float y, float z);
+	
+	void KillMe() { isDead_ = true; }
+
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)
 	{
@@ -35,4 +41,7 @@ public:
 		childList_.push_back(obj);
 		return obj;
 	}
+
+private:
+	bool isDead_;
 };
