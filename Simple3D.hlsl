@@ -37,16 +37,16 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	//ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
 	//スクリーン座標に変換し、ピクセルシェーダーへ
     outData.pos = mul(pos, matWVP);
-    outData.uv = uv;
-    
-    normal = mul(pos, matNormal);
-    normal = normalize(normal);
-    normal.w = 0; //w成分は0にしておく
-    
+    uv.w = 1; //w成分は0にする
+    outData.uv = uv.xy; //UV座標はそのまま
+
+    normal = mul(normal, matNormal); //法線ベクトルをワールド・ビュー・プロジェクション行列で変換
+    normal = normalize(normal); //法線ベクトルを正規化=長さ1に)
+    normal.w = 0; //w成分は0にする
     float4 light = float4(-1, 0.5, -0.7, 0);
     light = normalize(light);
-    light.w = 0; //w成分は0にしておく
-    outData.color = clamp(dot(normal, light),0,1);
+    light.w = 0;
+    outData.color = clamp(dot(normal, light), 0, 1);
 
 	//まとめて出力
     return outData;
@@ -67,5 +67,5 @@ float4 PS(VS_OUT inData) : SV_Target
         color = diffuseColor;
     }
     
-    return color;
+    return color * inData.color;
 }
