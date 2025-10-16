@@ -8,6 +8,10 @@ GameObject::GameObject()
 GameObject::GameObject(GameObject* parent, const string& name)
 	:pParent_(parent),objectName_(name)
 {
+	if (parent != nullptr)
+	{
+		transform_.pParent_ = &parent->transform_;
+	}
 }
 
 GameObject::~GameObject()

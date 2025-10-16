@@ -1,17 +1,7 @@
-#include "Player.h"
-#include "Engine/Fbx.h"
 #include "ChildOden.h"
+#include "Engine/Fbx.h"
 
-Player::Player(GameObject* parent)
-	:GameObject(parent, "Player"), pFbx_(nullptr)
-{
-}
-
-Player::~Player()
-{
-}
-
-void Player::Initialize()
+ChildOden::ChildOden(GameObject* parent)
 {
 	pFbx_ = new Fbx();
 	//本来はここでFbxのnullptrチェックをするべき
@@ -19,17 +9,23 @@ void Player::Initialize()
 	transform_.scale_.x = 0.7f;
 	transform_.scale_.y = 0.7f;
 	transform_.scale_.z = 0.7f;
-	//ChildOden生成
-	Instantiate<ChildOden>(this);
-	
+	transform_.position_.x = 3.0f;
 }
 
-void Player::Update()
+ChildOden::~ChildOden()
 {
-	transform_.rotate_.y += 1.0f;
 }
 
-void Player::Draw()
+void ChildOden::Initialize()
+{
+}
+
+void ChildOden::Update()
+{
+	transform_.rotate_.y += 0.5f;
+}
+
+void ChildOden::Draw()
 {
 	if (pFbx_)
 	{
@@ -37,7 +33,7 @@ void Player::Draw()
 	}
 }
 
-void Player::Release()
+void ChildOden::Release()
 {
 	if (pFbx_)
 	{
