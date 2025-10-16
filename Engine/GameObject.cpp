@@ -44,7 +44,6 @@ void GameObject::ReleaseSub()
 	for (auto child : childList_)
 	{
 		child->ReleaseSub();
-		delete child;
 	}
 	childList_.clear();
 }

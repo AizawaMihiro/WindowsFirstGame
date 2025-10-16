@@ -137,11 +137,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         //メッセージなし
         {
+            timeBeginPeriod(1);
+
 			static int FrameCnt = 0;
 			static DWORD startTime = timeGetTime();
 			DWORD nowTime = timeGetTime();
 
 			static DWORD lastUpdateTime = nowTime;
+
+            timeEndPeriod(1);
 
             if (nowTime - startTime >= 1000.f)
             {
@@ -187,7 +191,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 	Input::Release();
-	pRootJob->Release();
+	pRootJob->ReleaseSub();
     Direct3D::Release();
 
     return (int) msg.wParam;
