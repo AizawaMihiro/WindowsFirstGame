@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	:pParent_(nullptr)
+	:pParent_(nullptr), isDead_(false)
 {
 }
 
