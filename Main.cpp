@@ -34,6 +34,7 @@
 #include "Engine/Transform.h"
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
+#include "Engine/Model.h"
 
 #pragma comment(lib,"winmm.lib") //timeGetTimeを使うために必要
 
@@ -190,6 +191,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
     }
+	Model::Release();
 	Input::Release();
 	pRootJob->ReleaseSub();
     Direct3D::Release();

@@ -1,4 +1,5 @@
 #include "Model.h"
+#include "Direct3D.h"
 
 namespace Model
 {
@@ -44,12 +45,23 @@ void Model::Draw(int hModel)
 
 void Model::Release()
 {
-	//モデルデータ解放（仮）
-	for (auto& itr : modelList)
+	bool isReffered = false;//参照されているかどうか
+	for (int i = 0; i < modelList.size(); i++)
 	{
-		itr->pFbx_->Release();
-		delete itr->pFbx_;
-		delete itr;
+		isReffered = false;
+		for (int j = i; j < modelList.size(); j++)
+		{
+			if (modelList[i]->pFbx_ == modelList[j]->pFbx_)
+			{
+				isReffered = true;
+				break;
+			}
+		}
+		if (isReffered)
+		{
+			SAFE_DELETE(modelList[i]->pFbx_);
+		}
+		SAFE_DELETE(modelList[i]);
 	}
 	modelList.clear();
 }

@@ -1,12 +1,12 @@
 #include "ChildOden.h"
 #include "Engine/Fbx.h"
+#include "Engine/Model.h"
 
 ChildOden::ChildOden(GameObject* parent)
 	:GameObject(parent, "ChildOden"), pFbx_(nullptr)
 {
-	pFbx_ = new Fbx();
-	//本来はここでFbxのnullptrチェックをするべき
-	pFbx_->Load("Oden.fbx");
+	hModel_ = Model::Load("Oden.fbx");
+	assert(hModel_ >= 0);
 	transform_.scale_.x = 0.3f;
 	transform_.scale_.y = 0.3f;
 	transform_.scale_.z = 0.3f;
@@ -29,10 +29,8 @@ void ChildOden::Update()
 
 void ChildOden::Draw()
 {
-	if (pFbx_)
-	{
-		pFbx_->Draw(transform_);
-	}
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
 }
 
 void ChildOden::Release()
