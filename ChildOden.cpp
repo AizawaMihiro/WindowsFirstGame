@@ -3,7 +3,7 @@
 #include "Engine/Model.h"
 
 ChildOden::ChildOden(GameObject* parent)
-	:GameObject(parent, "ChildOden"), pFbx_(nullptr)
+	:GameObject(parent, "ChildOden"), hModel_(-1)
 {
 	hModel_ = Model::Load("Oden.fbx");
 	assert(hModel_ >= 0);
@@ -35,10 +35,10 @@ void ChildOden::Draw()
 
 void ChildOden::Release()
 {
-	if (pFbx_)
-	{
-		pFbx_->Release();
-		delete pFbx_;
-		pFbx_ = nullptr;
-	}
+	//if (pFbx_)
+	//{
+	//	pFbx_->Release();
+	//	delete pFbx_;
+	//	pFbx_ = nullptr;
+	//}
 }

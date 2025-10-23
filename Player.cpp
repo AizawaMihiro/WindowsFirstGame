@@ -4,7 +4,7 @@
 #include "ChildOden.h"
 
 Player::Player(GameObject* parent)
-	:GameObject(parent, "Player"), pFbx_(nullptr)
+	:GameObject(parent, "Player"), hModel_(-1)
 {
 }
 
@@ -44,10 +44,10 @@ void Player::Draw()
 
 void Player::Release()
 {
-	if (pFbx_)
-	{
-		pFbx_->Release();
-		delete pFbx_;
-		pFbx_ = nullptr;
-	}
+	//if (pFbx_)
+	//{
+	//	pFbx_->Release();
+	//	delete pFbx_;
+	//	pFbx_ = nullptr;
+	//}
 }
