@@ -77,3 +77,42 @@ void GameObject::SetPosition(float x, float y, float z)
 {
 	transform_.position_ = XMFLOAT3(x, y, z);
 }
+
+GameObject* GameObject::GetRootJob()
+{
+	if (pParent_ == nullptr)
+	{
+		return this;
+	}
+	else
+	{
+		return pParent_->GetRootJob();
+	}
+}
+
+GameObject* GameObject::FindChildObject(const string& name)
+{
+	if (this->objectName_ == name)
+	{
+		return this;//Ž©•ªŽ©g‚ð•Ô‚·
+	}
+	else
+	{
+		for (auto child : childList_)
+		{
+			GameObject* foundObject = child->FindChildObject(name);
+			if (foundObject != nullptr)
+			{
+				return foundObject;
+			}
+		}
+	}
+	return nullptr;
+}
+
+GameObject* GameObject::FindObject(const string& name)
+{
+	GameObject* rootJob = GetRootJob();
+	GameObject* foundObject = rootJob->FindChildObject(name);
+	return foundObject;
+}
