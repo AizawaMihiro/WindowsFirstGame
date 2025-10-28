@@ -33,8 +33,6 @@ public:
 	
 	void KillMe() { isDead_ = true; }
 
-	GameObject* GetRootJob();
-	GameObject* FindChildObject(const string& name);
 	GameObject* FindObject(const string& name);
 
 	template <class T>
@@ -48,4 +46,6 @@ public:
 
 private:
 	bool isDead_;
+	GameObject* GetRootJob();
+	GameObject* FindChildObject(const string& name);
 };
