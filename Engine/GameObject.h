@@ -3,6 +3,7 @@
 #include <string>
 #include "Transform.h"
 #include <list>
+#include "SphereCollider.h"
 
 using std::string;
 using std::list;
@@ -14,6 +15,8 @@ protected:
 	Transform	transform_;
 	GameObject*	pParent_;
 	string	objectName_;
+	SphereCollider* pCollider_;
+
 
 public:
 	GameObject();
@@ -34,6 +37,10 @@ public:
 	void KillMe() { isDead_ = true; }
 
 	GameObject* FindObject(const string& name);
+
+	void AddCollider(SphereCollider* pCollider);
+	void Collision(GameObject* pTarget);
+	void RoundRobin(GameObject* pTarget);
 
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)
