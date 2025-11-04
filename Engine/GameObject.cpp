@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include <Windows.h>
 
 GameObject::GameObject()
 	:pParent_(nullptr), isDead_(false)
@@ -35,6 +36,9 @@ void GameObject::UpdateSub()
 {
 	transform_.Calclation();
 	this->Update();
+
+	//RoundRobin():
+
 	//子オブジェクトの更新
 	for (auto child : childList_)
 	{
@@ -115,4 +119,46 @@ GameObject* GameObject::FindObject(const string& name)
 	GameObject* rootJob = GetRootJob();
 	GameObject* foundObject = rootJob->FindChildObject(name);
 	return foundObject;
+}
+
+void GameObject::AddCollider(SphereCollider* pCollider)
+{
+	pCollider_ = pCollider;
+}
+
+void GameObject::Collision(GameObject* pTarget)
+{
+	//this->pColliderとpTerget->pColliderが重なっているか確認する
+	float thisR = this->pCollider_->GetRadius();
+	float tarR = pTarget->pCollider_->GetRadius();
+	float hitLength = (thisR + tarR) * (thisR + tarR);//距離の二乗
+
+	XMFLOAT3 thisP = this->transform_.position_;
+	XMFLOAT3 tarP = pTarget->transform_.position_;
+	float dist = (thisP.x + tarP.x) * (thisP.x + tarP.x) + (thisP.y + tarP.y) * (thisP.y + tarP.y) + (thisP.z + tarP.z) * (thisP.z + tarP.z);
+	if (hitLength >= dist)
+	{
+		//当たった際のリアクション
+		MessageBox(0, "Cllide", "Collider", MB_OK);
+	}
+
+}
+
+void GameObject::RoundRobin(GameObject* pTarget)
+{
+	//自分にコライダーがなければreturn
+	//当たり判定ののち子オブジェクトとも当たり判定をする
+
+	if (pCollider_ == nullptr)
+	{
+		return;
+	}
+	if (pTarget->pCollider_ != nullptr)
+	{
+		Collision(this);
+		for (auto& itr : pTarget->childList_)
+		{
+			RoundRobin(itr);
+		}
+	}
 }
