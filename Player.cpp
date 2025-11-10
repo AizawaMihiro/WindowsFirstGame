@@ -2,6 +2,7 @@
 #include "Engine/Fbx.h"
 #include "Engine/Model.h"
 #include "ChildOden.h"
+#include "Engine/SphereCollider.h"
 
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel_(-1)

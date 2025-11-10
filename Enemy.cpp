@@ -1,5 +1,4 @@
 #include "Enemy.h"
-#include "Engine/Model.h"
 
 Enemy::Enemy(GameObject* parent)
 	:GameObject(parent,"Enemy")
@@ -12,8 +11,11 @@ Enemy::~Enemy()
 
 void Enemy::Initialize()
 {
-	hModel_ = Model::Load("Oden.fbx");
-	pCollider_ = new SphereCollider(3.0f);
+	pFbx = new Fbx;
+	pFbx->Load("Oden.fbx");
+	transform_.position_ = { 0.0f,0.0f,50.0f };
+
+	pCollider_ = new SphereCollider(0.5f);
 }
 
 void Enemy::Update()
@@ -22,6 +24,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
+	pFbx->Draw(transform_);
 }
 
 void Enemy::Release()

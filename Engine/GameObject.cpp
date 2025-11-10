@@ -139,7 +139,7 @@ void GameObject::Collision(GameObject* pTarget)
 	if (hitLength >= dist)
 	{
 		//“–‚½‚Á‚½Û‚ÌƒŠƒAƒNƒVƒ‡ƒ“
-		MessageBox(0, "Cllide", "Collider", MB_OK);
+		//MessageBox(0, "Cllide", "Collider", MB_OK);
 	}
 
 }
