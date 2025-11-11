@@ -3,6 +3,7 @@
 #include "Engine/Model.h"
 #include "ChildOden.h"
 #include "Engine/SphereCollider.h"
+#include "Engine//Input.h"
 
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel_(-1)
@@ -25,15 +26,26 @@ void Player::Initialize()
 	pLChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
 	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
 	pLChildOden_->SetPosition(-2.0f, 1.0f, 0.0f);
+
+	SphereCollider* col = new SphereCollider(0.5f);
+	AddCollider(col);
 	
 }
 
 void Player::Update()
 {
 	transform_.rotate_.y += 1.0f;
-	if (transform_.rotate_.y >= 720)
+	//if (transform_.rotate_.y >= 720)
+	//{
+	//	KillMe();
+	//}
+
+	if (Input::IsKey(DIK_W)) {
+		transform_.position_.z += 0.2f;
+	}
+	if (Input::IsKey(DIK_S))
 	{
-		KillMe();
+		transform_.position_.z -= 0.2f;
 	}
 }
 

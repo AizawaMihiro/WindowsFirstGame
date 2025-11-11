@@ -1,6 +1,12 @@
 #include "GameObject.h"
 #include <Windows.h>
 
+namespace {
+	bool operator==(const XMFLOAT3& lhs, const XMFLOAT3& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+	}
+}
+
 GameObject::GameObject()
 	:pParent_(nullptr), isDead_(false)
 {
@@ -37,7 +43,7 @@ void GameObject::UpdateSub()
 	transform_.Calclation();
 	this->Update();
 
-	//RoundRobin():
+	RoundRobin(GetRootJob());
 
 	//子オブジェクトの更新
 	for (auto child : childList_)
@@ -128,18 +134,24 @@ void GameObject::AddCollider(SphereCollider* pCollider)
 
 void GameObject::Collision(GameObject* pTarget)
 {
-	//this->pColliderとpTerget->pColliderが重なっているか確認する
+	//this->pColliderとpTarget->pColliderが重なっているか確認する
 	float thisR = this->pCollider_->GetRadius();
 	float tarR = pTarget->pCollider_->GetRadius();
 	float hitLength = (thisR + tarR) * (thisR + tarR);//距離の二乗
 
 	XMFLOAT3 thisP = this->transform_.position_;
 	XMFLOAT3 tarP = pTarget->transform_.position_;
-	float dist = (thisP.x + tarP.x) * (thisP.x + tarP.x) + (thisP.y + tarP.y) * (thisP.y + tarP.y) + (thisP.z + tarP.z) * (thisP.z + tarP.z);
-	if (hitLength >= dist)
+	//if (thisP == tarP)
+	//{
+	//	return;
+	//}
+	float dist = (thisP.x - tarP.x) * (thisP.x - tarP.x) +
+				 (thisP.y - tarP.y) * (thisP.y - tarP.y) + 
+				 (thisP.z - tarP.z) * (thisP.z - tarP.z);
+	if (dist <= hitLength)
 	{
 		//当たった際のリアクション
-		//MessageBox(0, "Cllide", "Collider", MB_OK);
+		MessageBoxA(0, "Collide", "Collider", MB_OK);
 	}
 
 }
@@ -148,17 +160,20 @@ void GameObject::RoundRobin(GameObject* pTarget)
 {
 	//自分にコライダーがなければreturn
 	//当たり判定ののち子オブジェクトとも当たり判定をする
-
+	if (pTarget->pCollider_ == pCollider_) 
+	{
+		return;
+	}
 	if (pCollider_ == nullptr)
 	{
 		return;
 	}
 	if (pTarget->pCollider_ != nullptr)
 	{
-		Collision(this);
-		for (auto& itr : pTarget->childList_)
-		{
-			RoundRobin(itr);
-		}
+		Collision(pTarget);
+	}
+	for (auto& itr : pTarget->childList_)
+	{
+		RoundRobin(itr);
 	}
 }
