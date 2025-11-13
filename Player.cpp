@@ -3,7 +3,6 @@
 #include "Engine/Model.h"
 #include "ChildOden.h"
 #include "Engine/SphereCollider.h"
-#include "Engine//Input.h"
 
 Player::Player(GameObject* parent)
 	:GameObject(parent, "Player"), hModel_(-1)
@@ -40,13 +39,6 @@ void Player::Update()
 	//	KillMe();
 	//}
 
-	if (Input::IsKey(DIK_W)) {
-		transform_.position_.z += 0.2f;
-	}
-	if (Input::IsKey(DIK_S))
-	{
-		transform_.position_.z -= 0.2f;
-	}
 }
 
 void Player::Draw()

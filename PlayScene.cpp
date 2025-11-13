@@ -1,6 +1,8 @@
 #include "PlayScene.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Bullet.h"
+#include "Engine//Input.h"
 
 PlayScene::PlayScene(GameObject* parent)
 	:GameObject(parent, "PlayScene")
@@ -24,6 +26,9 @@ void PlayScene::Initialize()
 
 void PlayScene::Update()
 {
+	if (Input::IsKeyDown(DIK_SPACE)) {
+		Instantiate<Bullet>(this);
+	}
 }
 
 void PlayScene::Draw()

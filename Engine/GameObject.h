@@ -33,6 +33,7 @@ public:
 
 	void SetPosition(XMFLOAT3 position);
 	void SetPosition(float x, float y, float z);
+	XMFLOAT3 GetPosition() { return transform_.position_; }
 	
 	void KillMe() { isDead_ = true; }
 
@@ -41,6 +42,15 @@ public:
 	void AddCollider(SphereCollider* pCollider);
 	void Collision(GameObject* pTarget);
 	void RoundRobin(GameObject* pTarget);
+
+	/// <summary>
+	/// “–‚½‚è”»’è‚Å“–‚½‚Á‚½‚Æ‚È‚Á‚½ê‡ŒÄ‚Ño‚³‚ê‚éŠÖ”
+	/// </summary>
+	/// <param name="pTarget">“–‚½‚Á‚½‘Šè</param>
+	virtual void onCollision(GameObject* pTarget);
+
+	string GetObjectName() { return objectName_; }
+	void SetDeadFlag(bool flag) { isDead_ = flag; }
 
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)

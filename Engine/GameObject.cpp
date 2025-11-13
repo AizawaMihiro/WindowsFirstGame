@@ -150,8 +150,8 @@ void GameObject::Collision(GameObject* pTarget)
 				 (thisP.z - tarP.z) * (thisP.z - tarP.z);
 	if (dist <= hitLength)
 	{
-		//“–‚½‚Á‚½Û‚ÌƒŠƒAƒNƒVƒ‡ƒ“
-		MessageBoxA(0, "Collide", "Collider", MB_OK);
+		this->onCollision(pTarget);
+		pTarget->onCollision(this);
 	}
 
 }
@@ -176,4 +176,8 @@ void GameObject::RoundRobin(GameObject* pTarget)
 	{
 		RoundRobin(itr);
 	}
+}
+
+void GameObject::onCollision(GameObject* pTarget)
+{
 }

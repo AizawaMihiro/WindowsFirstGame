@@ -12,7 +12,8 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Release() override;
+	void onCollision(GameObject* pTerget) override;
 private:
-	Fbx* pFbx;
+	Fbx* pFbx_;
 };
 
