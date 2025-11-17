@@ -7,8 +7,7 @@ class ChildOden;
 class Player :
     public GameObject
 {
-	//Fbx* pFbx_;
-	int hModel_;
+	Fbx* pFbx_;
 	ChildOden* pRChildOden_;
 	ChildOden* pLChildOden_;
 

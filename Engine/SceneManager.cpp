@@ -2,6 +2,7 @@
 #include "Direct3D.h"
 #include "../Playscene.h"
 #include "../TestScene.h"
+#include "../ClearScene.h"
 
 SceneManager::SceneManager(GameObject* parent)
 	:GameObject(parent, "SceneManager")
@@ -37,6 +38,9 @@ void SceneManager::Update()
 			break;
 		case SCENE_ID_PLAY:
 			Instantiate<PlayScene>(this);
+			break;
+		case SCENE_ID_CLEAR:
+			Instantiate<ClearScene>(this);
 			break;
 		case SCENE_ID_MAX:
 			break;

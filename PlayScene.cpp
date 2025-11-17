@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Engine//Input.h"
+#include "Engine/SceneManager.h"
 
 PlayScene::PlayScene(GameObject* parent)
 	:GameObject(parent, "PlayScene")
@@ -28,6 +29,17 @@ void PlayScene::Update()
 {
 	if (Input::IsKeyDown(DIK_SPACE)) {
 		Instantiate<Bullet>(this);
+	}
+
+	GameObject* enemy = FindObject("Enemy");
+
+	if (enemy == nullptr && Input::IsKeyDown(DIK_C))
+	{
+		GameObject* sceneManager = FindObject("SceneManager");
+		if (sceneManager)
+		{
+			((SceneManager*)sceneManager)->ChangeScene(SCENE_ID_CLEAR);
+		}
 	}
 }
 

@@ -5,7 +5,7 @@
 #include "Engine/SphereCollider.h"
 
 Player::Player(GameObject* parent)
-	:GameObject(parent, "Player"), hModel_(-1)
+	:GameObject(parent, "Player")
 {
 }
 
@@ -15,8 +15,8 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	hModel_ = Model::Load("Oden.fbx");
-	assert(hModel_ >= 0);
+	pFbx_ = new Fbx;
+	pFbx_->Load("Oden.fbx");
 	transform_.scale_.x = 0.7f;
 	transform_.scale_.y = 0.7f;
 	transform_.scale_.z = 0.7f;
@@ -43,16 +43,15 @@ void Player::Update()
 
 void Player::Draw()
 {
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	pFbx_->Draw(transform_);
 }
 
 void Player::Release()
 {
-	//if (pFbx_)
-	//{
-	//	pFbx_->Release();
-	//	delete pFbx_;
-	//	pFbx_ = nullptr;
-	//}
+	if (pFbx_)
+	{
+		pFbx_->Release();
+		delete pFbx_;
+		pFbx_ = nullptr;
+	}
 }
