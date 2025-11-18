@@ -12,7 +12,7 @@ Bullet::~Bullet()
 void Bullet::Initialize()
 {
 	pFbx_ = new Fbx;
-	pFbx_->Load("Oden.fbx");
+	pFbx_->Load("Bulet.fbx");
 	transform_.position_ = FindObject("Player")->GetPosition();
 	transform_.scale_ = { 0.5f,0.5f,0.5f };
 
