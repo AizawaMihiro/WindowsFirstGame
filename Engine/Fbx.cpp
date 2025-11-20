@@ -162,7 +162,7 @@ void Fbx::InitVertex(FbxMesh* mesh)
 			FbxLayerElementUV* pUV = mesh->GetLayer(0)->GetUVs();
 			int uvIndex = mesh->GetTextureUVIndex(poly, vertex, FbxLayerElement::eTextureDiffuse);
 			FbxVector2  uv = pUV->GetDirectArray().GetAt(uvIndex);
-			vertices[index].uv = XMVectorSet((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f, 0.0f);
+			vertices[index].uv = XMVectorSet((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f, 1.0f);
 
 			//頂点の法線
 			FbxVector4 normal;
@@ -255,7 +255,7 @@ void Fbx::InitMaterial(FbxNode* pNode)
 		FbxSurfaceMaterial* pMaterial = pNode->GetMaterial(i);
 
 		//テクスチャ情報
-		FbxProperty  lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
+		FbxProperty lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
 
 		//テクスチャの数数
 		int fileTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
